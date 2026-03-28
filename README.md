@@ -1,61 +1,35 @@
-# EduBridge
+# EduBridge Monorepo Structure
 
-EduBridge is a Next.js website project with pages for home, about, contact, courses, and signup.
+This repository is organized into two top-level folders:
 
-## Tech Stack
+- `Frontend/`: Next.js web application (current implementation)
+- `Backend/`: Backend service placeholder (to be implemented)
 
-- Next.js 15
-- React 19
-- Tailwind CSS
-
-## Requirements
-
-- Node.js 18+ (recommended: latest LTS)
-- npm 9+
-
-## Run Locally
+## Quick Start (Frontend)
 
 1. Install dependencies:
 
 ```bash
+cd Frontend
 npm install
 ```
 
-2. Start development server:
+2. Run development server:
 
 ```bash
 npm run dev
 ```
 
-3. Open:
+3. Open in browser:
 
 ```text
 http://localhost:3000
 ```
 
-## Production Build
+## Build and Lint
 
 ```bash
-npm run build
-npm run start
-```
-
-## Quality Checks
-
-```bash
+cd Frontend
 npm run lint
 npm run build
 ```
-
-## Important Project Files
-
-- `package.json`: scripts and dependencies (must be committed)
-- `package-lock.json`: locked dependency versions for reproducible installs (must be committed)
-- `jsconfig.json`: alias config (`@/*`) for cleaner imports (must be committed)
-- `next.config.mjs`: Next.js runtime/build config (must be committed)
-
-## Security Notes
-
-- Do not commit real secrets.
-- Keep any local environment values in `.env.local` only.
-- `.gitignore` is configured to ignore all `.env*` files.
