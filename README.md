@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EduBridge
 
-## Getting Started
+EduBridge is a Next.js website project with pages for home, about, contact, courses, and signup.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js 15
+- React 19
+- Tailwind CSS
+
+## Requirements
+
+- Node.js 18+ (recommended: latest LTS)
+- npm 9+
+
+## Run Locally
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Production Build
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Quality Checks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Important Project Files
 
-## Deploy on Vercel
+- `package.json`: scripts and dependencies (must be committed)
+- `package-lock.json`: locked dependency versions for reproducible installs (must be committed)
+- `jsconfig.json`: alias config (`@/*`) for cleaner imports (must be committed)
+- `next.config.mjs`: Next.js runtime/build config (must be committed)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Security Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Do not commit real secrets.
+- Keep any local environment values in `.env.local` only.
+- `.gitignore` is configured to ignore all `.env*` files.

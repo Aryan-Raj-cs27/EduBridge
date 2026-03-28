@@ -1,4 +1,4 @@
-"use client";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -10,12 +10,12 @@ export default function Hero() {
         <p className="text-lg md:text-xl mb-8">
           Personalized Learning for Every Student
         </p>
-        <a
+        <Link
           href="/courses"
           className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition"
         >
           Explore Courses
-        </a>
+        </Link>
       </div>
     </section>
   );

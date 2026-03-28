@@ -1,7 +1,11 @@
-"use client";
 import Navbar from "./components/Navbar";
-import Chatbot from "./components/Chatbot";  // Import Chatbot
+import Chatbot from "./components/Chatbot"; 
 import "./globals.css";
+
+export const metadata = {
+  title: "EduBridge AI",
+  description: "Personalized learning with smart course guidance.",
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -9,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         {children}
-        <Chatbot />  {/* Add Chatbot to the layout */}
+        <Chatbot />
       </body>
     </html>
   );

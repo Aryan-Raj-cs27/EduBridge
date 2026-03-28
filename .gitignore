@@ -83,6 +83,9 @@ desktop.ini
 !.vscode/tasks.json
 !.vscode/launch.json
 
+# Local Copilot/agent context notes
+.github/context/
+
 .idea/
 *.swp
 *.swo
@@ -104,6 +107,10 @@ next-env.d.ts
 *.gz
 *.7z
 *.rar
+
+# Office docs (keep out of code repo unless explicitly needed)
+*.pptx
+*.docx
 
 # --------------------------------------------------
 # Local AI notes

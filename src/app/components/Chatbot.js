@@ -1,15 +1,74 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [messages, setMessages] = useState([
+    {
+      sender: "bot",
+      text: "Hello! I am your EduBridge assistant. Ask about courses, AI, web, or python.",
+    },
+  ]);
+  const messagesRef = useRef(null);
+
+  const getBotReply = (userText) => {
+    const text = userText.toLowerCase();
+
+    if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
+      return "Hello! I am your EduBridge assistant.";
+    }
+
+    if (text.includes("course") || text.includes("courses")) {
+      return "We currently offer AI for Beginners, Web Development, and Python Programming.";
+    }
+
+    if (text.includes("ai")) {
+      return "AI for Beginners is a good starting point for machine learning basics.";
+    }
+
+    if (
+      text.includes("web") ||
+      text.includes("html") ||
+      text.includes("css") ||
+      text.includes("javascript")
+    ) {
+      return "Our Web Development course covers HTML, CSS, JavaScript, and React fundamentals.";
+    }
+
+    if (text.includes("python")) {
+      return "Python Programming covers basics to advanced coding concepts.";
+    }
+
+    return "Please ask about courses, AI, web, or python.";
+  };
+
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleSend = (e) => {
+    e.preventDefault();
+
+    const trimmed = inputValue.trim();
+    if (!trimmed) return;
+
+    const userMessage = { sender: "user", text: `You: ${trimmed}` };
+    const botMessage = { sender: "bot", text: `Bot: ${getBotReply(trimmed)}` };
+
+    setMessages((prev) => [...prev, userMessage, botMessage]);
+    setInputValue("");
+  };
 
   return (
     <div className="fixed bottom-5 right-5">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700"
+        aria-label="Toggle chatbot"
       >
         <IoChatbubbleEllipsesSharp size={30} />
       </button>
@@ -17,15 +76,31 @@ export default function Chatbot() {
       {isOpen && (
         <div className="bg-white p-4 rounded-lg shadow-lg w-80 h-96 fixed bottom-16 right-5">
           <h2 className="text-lg font-bold">EduBridge AI Chat</h2>
-          <div className="h-72 overflow-y-auto p-2 border border-gray-300 mt-2">
-            {/* Messages will appear here */}
-            <p className="text-gray-500">Chatbot is coming soon...</p>
+          <div
+            ref={messagesRef}
+            className="h-72 overflow-y-auto p-2 border border-gray-300 mt-2 rounded"
+          >
+            {messages.map((message, index) => (
+              <p
+                key={`${message.sender}-${index}`}
+                className={`mb-2 text-sm ${
+                  message.sender === "user" ? "text-blue-700" : "text-slate-700"
+                }`}
+              >
+                {message.text}
+              </p>
+            ))}
           </div>
-          <input
-            type="text"
-            placeholder="Type a message..."
-            className="w-full p-2 border rounded mt-2"
-          />
+
+          <form onSubmit={handleSend} className="mt-2">
+            <input
+              type="text"
+              placeholder="Type a message..."
+              className="w-full p-2 border rounded"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </form>
         </div>
       )}
     </div>
