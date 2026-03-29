@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Reveal from "./Reveal";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -85,13 +86,16 @@ export default function SignUp() {
 
   return (
     <section
-      className="relative min-h-[88vh] overflow-hidden bg-cover bg-center px-4 py-10 sm:px-6 lg:px-8"
+      className="relative min-h-[calc(100vh-68px)] overflow-hidden bg-cover bg-center px-4 py-8 sm:px-6 lg:px-8"
       style={{ backgroundImage: "url('/about-bg.jpg')" }}
     >
-      <div className="absolute inset-0 bg-slate-950/65" aria-hidden="true"></div>
+      <div className="absolute inset-0 bg-slate-950/72" aria-hidden="true"></div>
+      <div className="absolute -left-16 top-10 h-52 w-52 rounded-full bg-blue-500/25 blur-3xl" aria-hidden="true"></div>
+      <div className="absolute -right-16 bottom-8 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" aria-hidden="true"></div>
 
       <div className="relative mx-auto flex w-full max-w-5xl items-center justify-center">
-        <div className="grid w-full overflow-hidden rounded-2xl border border-white/15 bg-white/95 shadow-2xl backdrop-blur-sm md:grid-cols-5">
+        <Reveal className="w-full">
+          <div className="grid w-full overflow-hidden rounded-2xl border border-white/15 bg-white/95 shadow-2xl backdrop-blur-sm md:grid-cols-5">
           <div className="hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-8 text-white md:col-span-2 md:block">
             <p className="inline-block rounded-full border border-white/25 px-3 py-1 text-xs font-semibold tracking-wide text-slate-100">
               EduBridge AI
@@ -174,7 +178,8 @@ export default function SignUp() {
               </button>
             </form>
           </div>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

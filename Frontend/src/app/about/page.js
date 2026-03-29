@@ -1,22 +1,24 @@
 import PageHero from "@/app/components/PageHero";
+import Reveal from "@/app/components/Reveal";
 
 export default function AboutPage() {
   return (
     <div className="bg-transparent">
       <PageHero
         title="About EduBridge"
-        subtitle="Built for learners who want practical growth, not just passive content."
+        subtitle="Built for learners who want practical growth with clarity, structure, and momentum."
         image="/about-bg.jpg"
       />
 
       <div className="site-container section-padding text-center">
-        <h2 className="section-title">Our Mission</h2>
-        <p className="section-copy mx-auto mt-4 max-w-3xl">
-          EduBridge combines clarity, structure, and adaptive learning support so anyone can build job-ready skills faster.
-        </p>
-        <div className="mx-auto mt-8 max-w-xl rounded-xl border border-slate-200 bg-white px-5 py-4 text-slate-700 shadow-sm">
-          Customer Care: +91 9031859167
-        </div>
+        <Reveal>
+          <h2 className="section-title">Our Mission</h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <p className="section-copy mx-auto mt-4 max-w-3xl">
+            EduBridge blends practical curriculum design with modern guidance so learners can build useful skills without confusion.
+          </p>
+        </Reveal>
       </div>
     </div>
   );
