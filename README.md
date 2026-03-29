@@ -1,24 +1,30 @@
 # EduBridge
 
-EduBridge is a web platform project organized for clean separation between frontend and backend.
+EduBridge is a modern learning platform focused on practical, guided skill development through a clean and responsive user experience.
 
-## Repository Structure
+## Overview
 
-- `Frontend/` - Next.js 15 web application (implemented)
-- `Backend/` - Backend placeholder for future API/service implementation
+- Product-first frontend built with the App Router architecture
+- Consistent visual system across Home, About, Courses, Contact, and Signup
+- Responsive interactions optimized for desktop and mobile browsers
+- Theme support with persistent mode preference
 
-## Frontend Stack
+## Repository Layout
+
+- `Frontend/` - Production-ready Next.js application
+- `Backend/` - Service layer scaffold for upcoming API implementation
+
+## Tech Stack
 
 - Next.js 15
 - React 19
 - Tailwind CSS
+- ESLint (Next.js core web-vitals profile)
 
-## Prerequisites
+## Local Development
 
-- Node.js 18+ (LTS recommended)
-- npm 9+
-
-## Run Locally
+1. Open terminal at repository root.
+2. Run:
 
 ```bash
 cd Frontend
@@ -26,9 +32,22 @@ npm install
 npm run dev
 ```
 
-Open: `http://localhost:3000`
+App URL: `http://localhost:3000`
 
-## Quality and Build Checks
+## LAN Testing (Phone + Laptop)
+
+Run the app on your local network:
+
+```bash
+cd Frontend
+npm run dev:lan
+```
+
+Open on mobile (same Wi-Fi): `http://<your-laptop-ip>:3000`
+
+## Quality Gates
+
+Run static checks before every commit:
 
 ```bash
 cd Frontend
@@ -44,14 +63,28 @@ npm run build
 npm run start
 ```
 
-## Important Notes
+## Available Scripts (Frontend)
 
-- `Frontend/.eslintrc.json` is intentionally kept to make linting non-interactive and consistent across machines.
-- Secrets should never be committed. Keep local values only in `.env.local`.
-- Install dependencies from lockfile for reproducible setup: `npm install` inside `Frontend`.
+- `npm run dev` - Starts local development server
+- `npm run dev:lan` - Starts development server accessible on LAN
+- `npm run lint` - Runs ESLint checks
+- `npm run build` - Builds optimized production bundle
+- `npm run start` - Serves production build
 
-## Final Project Readiness
+## Current UX Highlights
 
-- Repository is structured for clarity (`Frontend` and `Backend`).
-- Frontend builds and lints successfully.
-- Files in version control are limited to project-required code and configuration.
+- Refined hero motion with smooth timing and mobile-aware ambient animation
+- Compact theme toggle with persistent preference (Auto, Light, Dark)
+- Improved contact actions including tap-to-copy support
+- Polished chatbot panel layout and interaction behavior
+- Balanced card layouts and improved readability on image-based headers
+
+## Roadmap
+
+- Backend API integration for authentication and dynamic course data
+- Progress tracking and learner dashboard modules
+- Enhanced analytics and engagement instrumentation
+
+## License
+
+This project is licensed under the terms specified in `Frontend/LICENSE`.
