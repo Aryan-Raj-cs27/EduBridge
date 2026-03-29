@@ -67,18 +67,18 @@ export default function Chatbot() {
     <div className="fixed bottom-5 right-5">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700"
+        className="rounded-full bg-slate-900 p-3 text-white shadow-lg transition hover:bg-slate-800"
         aria-label="Toggle chatbot"
       >
         <IoChatbubbleEllipsesSharp size={30} />
       </button>
 
       {isOpen && (
-        <div className="bg-white p-4 rounded-lg shadow-lg w-80 h-96 fixed bottom-16 right-5">
-          <h2 className="text-lg font-bold">EduBridge AI Chat</h2>
+        <div className="fixed bottom-16 right-5 h-96 w-80 rounded-xl border border-slate-200 bg-white p-4 shadow-2xl">
+          <h2 className="text-lg font-bold tracking-tight text-slate-900">EduBridge AI Chat</h2>
           <div
             ref={messagesRef}
-            className="h-72 overflow-y-auto p-2 border border-gray-300 mt-2 rounded"
+            className="mt-2 h-72 overflow-y-auto rounded border border-slate-200 bg-slate-50 p-2"
           >
             {messages.map((message, index) => (
               <p
@@ -96,7 +96,7 @@ export default function Chatbot() {
             <input
               type="text"
               placeholder="Type a message..."
-              className="w-full p-2 border rounded"
+              className="w-full rounded border border-slate-300 p-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />

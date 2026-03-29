@@ -13,9 +13,9 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-blue-600 text-white p-4 shadow-md">
-      <div className="container mx-auto flex flex-wrap justify-between items-center gap-3">
-        <h1 className="text-2xl font-bold">EduBridge AI</h1>
+    <nav className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 py-3 text-slate-900 shadow-sm backdrop-blur-md">
+      <div className="site-container flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">EduBridge AI</h1>
         <div className="flex flex-wrap items-center gap-2 text-sm sm:text-base">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -24,7 +24,9 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`px-3 py-1 rounded transition ${
-                  isActive ? "bg-blue-700 border border-blue-200" : "hover:underline"
+                  isActive
+                    ? "border border-blue-200 bg-blue-50 text-blue-700"
+                    : "text-slate-700 hover:bg-slate-100"
                 }`}
               >
                 {link.label}
@@ -35,8 +37,8 @@ export default function Navbar() {
             href="/signup"
             className={`px-3 py-1 rounded font-medium transition ${
               pathname === "/signup"
-                ? "bg-gray-100 text-blue-700"
-                : "bg-white text-blue-600 hover:bg-gray-200"
+                ? "bg-blue-700 text-white"
+                : "bg-slate-900 text-white hover:bg-slate-800"
             }`}
           >
             Sign Up

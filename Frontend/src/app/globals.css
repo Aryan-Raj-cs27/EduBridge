@@ -3,17 +3,48 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #f6f9ff;
   --foreground: #0f172a;
-  --brand-blue: #0f4fa8;
-  --brand-light: #ecf3ff;
+  --surface: #ffffff;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e3a8a;
+  --brand-100: #dbeafe;
   --muted: #475569;
 }
 
 body {
   min-height: 100vh;
-  background-color: var(--background);
+  background:
+    radial-gradient(circle at 12% 8%, #eaf2ff 0%, transparent 36%),
+    radial-gradient(circle at 88% 14%, #e9efff 0%, transparent 32%),
+    var(--background);
   color: var(--foreground);
   overflow: auto;
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-14 sm:py-16 lg:py-20;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl;
+  }
+
+  .section-copy {
+    @apply text-base leading-relaxed text-slate-600 sm:text-lg;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-slate-200/90 bg-white shadow-sm;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300;
+  }
 }
 
