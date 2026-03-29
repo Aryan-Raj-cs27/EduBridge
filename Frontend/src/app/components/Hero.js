@@ -50,26 +50,26 @@ export default function Hero() {
       <div className="hero-orb hero-orb-right" aria-hidden="true"></div>
 
       <div className="site-container relative py-16 text-center sm:py-20">
-        <Reveal delay={60}>
+        <Reveal delay={90} duration={540}>
           <p className="hero-chip">
             Future-ready Learning Platform
           </p>
         </Reveal>
 
-        <Reveal delay={140}>
+        <Reveal delay={210} duration={620}>
           <h1 className="mx-auto mt-4 max-w-4xl text-4xl font-bold leading-[1.15] sm:text-5xl lg:text-6xl">
             Learn Smarter with
             <span className="hero-brand mt-3 block">EduBridge AI</span>
           </h1>
         </Reveal>
 
-        <Reveal delay={220}>
+        <Reveal delay={340} duration={600}>
           <p className="mx-auto mt-5 max-w-2xl text-base text-blue-100 sm:text-lg">
             Structured and practical learning paths for students, professionals, and career switchers.
           </p>
         </Reveal>
 
-        <Reveal delay={280} className="mt-9">
+        <Reveal delay={430} duration={560} className="mt-9">
           <Link href="/courses" className="btn-fancy">
             Explore Courses
             <span className="ml-2" aria-hidden="true">

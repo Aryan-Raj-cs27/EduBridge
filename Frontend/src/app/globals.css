@@ -99,14 +99,16 @@ body {
   }
 
   .theme-toggle-btn {
-    @apply inline-flex h-8 w-8 items-center justify-center rounded-full border text-slate-700 transition;
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-full border text-slate-700;
     border-color: color-mix(in srgb, var(--border) 85%, transparent);
     background: color-mix(in srgb, var(--surface) 88%, transparent);
+    transition: color 220ms ease, border-color 220ms ease, transform 220ms ease, background-color 220ms ease;
   }
 
   .theme-toggle-btn:hover {
     color: var(--brand-700);
     border-color: color-mix(in srgb, var(--brand-500) 45%, var(--border));
+    transform: translateY(-1px);
   }
 
   .hero-shell {
@@ -125,8 +127,8 @@ body {
 
   .hero-orb {
     @apply absolute rounded-full blur-3xl;
-    transition: transform 160ms linear;
-    animation: heroFloat 8s ease-in-out infinite;
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    animation: heroFloat 10s ease-in-out infinite;
   }
 
   .hero-orb-left {
@@ -160,19 +162,21 @@ body {
     background: linear-gradient(120deg, #2563eb 0%, #0ea5e9 55%, #2563eb 100%);
     background-size: 180% 180%;
     box-shadow: 0 12px 24px rgba(14, 165, 233, 0.24);
-    transition: transform 220ms ease, box-shadow 220ms ease, background-position 220ms ease;
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, background-position 260ms ease;
   }
 
   .btn-fancy:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.01);
     background-position: 100% 50%;
     box-shadow: 0 16px 30px rgba(14, 165, 233, 0.34);
   }
 
   .reveal {
     opacity: 0;
-    transform: translateY(20px) scale(0.99);
-    transition: opacity 520ms ease, transform 520ms ease;
+    transform: translateY(18px) scale(0.992);
+    transition:
+      opacity var(--reveal-duration, 560ms) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+      transform var(--reveal-duration, 560ms) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
     will-change: transform, opacity;
   }
 

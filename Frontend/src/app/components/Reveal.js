@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 export default function Reveal({
   children,
   delay = 0,
+  duration = 560,
   className = "",
   as: Component = "div",
 }) {
@@ -33,7 +34,10 @@ export default function Reveal({
     <Component
       ref={ref}
       className={`reveal ${visible ? "reveal-visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{
+        "--reveal-delay": `${delay}ms`,
+        "--reveal-duration": `${duration}ms`,
+      }}
     >
       {children}
     </Component>
