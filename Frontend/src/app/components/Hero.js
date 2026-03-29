@@ -11,10 +11,11 @@ export default function Hero() {
           Future-ready Learning Platform
         </p>
         <h1 className="mx-auto max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-          Welcome to EduBridge AI
+          Welcome to
+          <span className="hero-typed mt-2 block">EduBridge AI</span>
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-base text-blue-100 sm:text-lg">
-          Personalized, practical, and adaptive learning for every student on any device.
+          Structured, practical, and adaptive learning paths for students, professionals, and career switchers.
         </p>
         <div className="mt-9">
           <Link href="/courses" className="btn-primary bg-white text-blue-800 hover:bg-slate-100">

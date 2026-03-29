@@ -101,9 +101,9 @@ export default function SignUp() {
               Join a focused, personalized learning experience designed for real progress.
             </p>
             <ul className="mt-8 space-y-3 text-sm text-slate-100">
-              <li>- Guided learning paths</li>
-              <li>- Practical project-first content</li>
-              <li>- Fast, mobile-friendly experience</li>
+              <li>- Structured learning paths</li>
+              <li>- Practical, project-led curriculum</li>
+              <li>- Progress-focused learning support</li>
             </ul>
           </div>
 

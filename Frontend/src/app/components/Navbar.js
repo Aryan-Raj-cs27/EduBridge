@@ -15,7 +15,12 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 py-3 text-slate-900 shadow-sm backdrop-blur-md">
       <div className="site-container flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">EduBridge AI</h1>
+        <Link
+          href="/"
+          className="rounded-md text-xl font-bold tracking-tight text-slate-900 transition hover:text-blue-700 sm:text-2xl"
+        >
+          EduBridge AI
+        </Link>
         <div className="flex flex-wrap items-center gap-2 text-sm sm:text-base">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
