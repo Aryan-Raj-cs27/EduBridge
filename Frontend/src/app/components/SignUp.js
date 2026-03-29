@@ -84,55 +84,98 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-100 px-4 py-10">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-4">Sign Up</h2>
-        {successMessage && <p className="text-emerald-700 text-sm mb-3">{successMessage}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={handleChange}
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+    <section
+      className="relative min-h-[88vh] overflow-hidden bg-cover bg-center px-4 py-10 sm:px-6 lg:px-8"
+      style={{ backgroundImage: "url('/about-bg.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-slate-950/65" aria-hidden="true"></div>
+
+      <div className="relative mx-auto flex w-full max-w-5xl items-center justify-center">
+        <div className="grid w-full overflow-hidden rounded-2xl border border-white/15 bg-white/95 shadow-2xl backdrop-blur-sm md:grid-cols-5">
+          <div className="hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-8 text-white md:col-span-2 md:block">
+            <p className="inline-block rounded-full border border-white/25 px-3 py-1 text-xs font-semibold tracking-wide text-slate-100">
+              EduBridge AI
+            </p>
+            <h2 className="mt-6 text-3xl font-bold leading-tight">Create your learning profile</h2>
+            <p className="mt-3 text-sm text-blue-100/95">
+              Join a focused, personalized learning experience designed for real progress.
+            </p>
+            <ul className="mt-8 space-y-3 text-sm text-slate-100">
+              <li>- Guided learning paths</li>
+              <li>- Practical project-first content</li>
+              <li>- Fast, mobile-friendly experience</li>
+            </ul>
           </div>
 
-          <div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={handleChange}
-            />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-          </div>
+          <div className="p-6 sm:p-8 md:col-span-3 md:p-10">
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Sign Up</h1>
+            <p className="mt-2 text-sm text-slate-600">Start your EduBridge journey in less than a minute.</p>
 
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={handleChange}
-            />
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
-          </div>
+            {successMessage && (
+              <p className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+                {successMessage}
+              </p>
+            )}
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          >
-            Sign Up
-          </button>
-        </form>
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              <div>
+                <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={formData.name}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  onChange={handleChange}
+                />
+                {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
+                  Email Address
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  onChange={handleChange}
+                />
+                {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="password" className="mb-1 block text-sm font-medium text-slate-700">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Minimum 6 characters"
+                  value={formData.password}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  onChange={handleChange}
+                />
+                {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-blue-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                Create Account
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
