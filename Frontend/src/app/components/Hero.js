@@ -1,11 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Reveal from "./Reveal";
 
 export default function Hero() {
   const [mouse, setMouse] = useState({ x: 50, y: 30 });
+
+  useEffect(() => {
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    if (!isTouchDevice) {
+      return;
+    }
+
+    let angle = 0;
+    const timer = window.setInterval(() => {
+      angle += 0.08;
+      const x = 50 + Math.sin(angle) * 12;
+      const y = 36 + Math.cos(angle * 0.8) * 8;
+      setMouse({ x, y });
+    }, 80);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   const styleVars = useMemo(
     () => ({

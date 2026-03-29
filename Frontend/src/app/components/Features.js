@@ -47,8 +47,8 @@ export default function Features() {
 
 function FeatureCard({ icon, title, description, delay }) {
   return (
-    <Reveal delay={delay}>
-      <div className="card-surface p-6 text-center transition hover:-translate-y-1 hover:shadow-lg">
+    <Reveal delay={delay} className="h-full">
+      <div className="card-surface flex h-full flex-col p-6 text-center transition hover:-translate-y-1 hover:shadow-lg">
         <div className="mb-4">{icon}</div>
         <h3 className="mb-2 text-xl font-semibold text-slate-900">{title}</h3>
         <p className="text-sm leading-relaxed text-slate-600">{description}</p>

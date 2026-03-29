@@ -64,7 +64,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5">
+    <div className="fixed bottom-5 right-5 z-40">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="rounded-full bg-slate-900 p-3 text-white shadow-lg transition hover:bg-slate-800"
@@ -74,11 +74,15 @@ export default function Chatbot() {
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-16 right-5 h-96 w-80 rounded-xl border border-slate-200 bg-white p-4 shadow-2xl">
-          <h2 className="text-lg font-bold tracking-tight text-slate-900">EduBridge AI Chat</h2>
+        <div className="fixed bottom-16 right-5 flex h-[26rem] w-[20rem] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl sm:w-[22rem]">
+          <div className="border-b border-slate-200 px-4 py-3">
+            <h2 className="text-lg font-bold tracking-tight text-slate-900">
+              <span className="text-blue-600">Edu</span>Bridge AI Chat
+            </h2>
+          </div>
           <div
             ref={messagesRef}
-            className="mt-2 h-72 overflow-y-auto rounded border border-slate-200 bg-slate-50 p-2"
+            className="mx-3 my-3 flex-1 overflow-y-auto rounded border border-slate-200 bg-slate-50 p-2"
           >
             {messages.map((message, index) => (
               <p
@@ -92,14 +96,22 @@ export default function Chatbot() {
             ))}
           </div>
 
-          <form onSubmit={handleSend} className="mt-2">
+          <form onSubmit={handleSend} className="border-t border-slate-200 p-3">
+            <div className="flex items-center gap-2">
             <input
               type="text"
               placeholder="Type a message..."
-              className="w-full rounded border border-slate-300 p-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="min-w-0 flex-1 rounded border border-slate-300 p-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
+            <button
+              type="submit"
+              className="rounded bg-blue-700 px-3 py-2 text-xs font-semibold text-white transition hover:bg-blue-800"
+            >
+              Send
+            </button>
+            </div>
           </form>
         </div>
       )}

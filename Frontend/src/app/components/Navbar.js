@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaDesktop, FaMoon, FaSun } from "react-icons/fa";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [themeChoice, setThemeChoice] = useState("auto");
+
+  const themeCycle = ["auto", "light", "dark"];
 
   useEffect(() => {
     const savedChoice = localStorage.getItem("edubridge-theme") || "auto";
@@ -40,6 +43,18 @@ export default function Navbar() {
     { href: "/contact", label: "Contact" },
   ];
 
+  const activeThemeIcon =
+    themeChoice === "dark" ? <FaMoon size={14} /> : themeChoice === "light" ? <FaSun size={14} /> : <FaDesktop size={14} />;
+
+  const activeThemeLabel =
+    themeChoice === "dark" ? "Dark mode" : themeChoice === "light" ? "Light mode" : "Auto mode";
+
+  const cycleTheme = () => {
+    const currentIndex = themeCycle.indexOf(themeChoice);
+    const nextTheme = themeCycle[(currentIndex + 1) % themeCycle.length];
+    setThemeChoice(nextTheme);
+  };
+
   return (
     <nav className="nav-shell">
       <div className="site-container flex flex-wrap items-center justify-between gap-3">
@@ -66,19 +81,15 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <label className="sr-only" htmlFor="theme-choice">
-            Theme
-          </label>
-          <select
-            id="theme-choice"
-            value={themeChoice}
-            onChange={(e) => setThemeChoice(e.target.value)}
-            className="rounded-md border border-slate-300 bg-white px-2 py-1 text-sm text-slate-700 outline-none transition focus:border-blue-500"
+          <button
+            type="button"
+            onClick={cycleTheme}
+            aria-label={`Change theme. Current: ${activeThemeLabel}`}
+            title={`Theme: ${activeThemeLabel}`}
+            className="theme-toggle-btn"
           >
-            <option value="auto">Auto</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
+            {activeThemeIcon}
+          </button>
           <Link
             href="/signup"
             className={`rounded-md px-3 py-1 font-medium transition ${
