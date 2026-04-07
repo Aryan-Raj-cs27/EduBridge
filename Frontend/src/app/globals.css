@@ -208,15 +208,14 @@ body {
 
   .hero-orb-left {
     @apply -left-16 top-8 h-56 w-56;
-    background: rgba(59, 130, 246, 0.35);
+    background: radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.55), rgba(59, 130, 246, 0.08));
     transform: translate3d(calc((var(--hero-mx, 50%) - 50%) / 5), calc((var(--hero-my, 50%) - 50%) / 6), 0);
   }
 
   .hero-orb-right {
     @apply -right-16 bottom-6 h-60 w-60;
-    background: rgba(6, 182, 212, 0.26);
+    background: radial-gradient(circle at 35% 35%, rgba(34, 211, 238, 0.45), rgba(6, 182, 212, 0.06));
     transform: translate3d(calc((50% - var(--hero-mx, 50%)) / 6), calc((50% - var(--hero-my, 50%)) / 8), 0);
-    animation-delay: 1.2s;
   }
 
   .hero-chip {

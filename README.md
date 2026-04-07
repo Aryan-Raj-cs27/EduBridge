@@ -1,30 +1,65 @@
 # EduBridge
 
-EduBridge is a modern learning platform focused on practical, guided skill development through a clean and responsive user experience.
+EduBridge is a modern learning platform focused on practical, guided skill development with a clean, responsive interface.
 
-## Overview
+## Highlights
 
-- Product-first frontend built with the App Router architecture
-- Consistent visual system across Home, About, Courses, Contact, and Signup
-- Responsive interactions optimized for desktop and mobile browsers
-- Theme support with persistent mode preference
+- Responsive, production-grade UI with consistent visual system across all pages
+- Auth flows with signup, login, password strength checks, and reset password
+- Profile gate that prompts login for protected access
+- Course enrollment + progress tracking with local persistence
+- Structured contact lead capture with validation and quick email actions
+- Theme toggle with Auto/Light/Dark modes and persistent preference
+- Scroll-based reveal animations and ambient hero motion
+
+## Features
+
+### Authentication (Frontend)
+- Signup with strong password rules and confirm-password flow
+- Login with session storage and user greeting in the navbar
+- Reset password page (local demo only; OTP verification requires backend)
+- Profile page gated behind login
+
+### Courses
+- Enroll/unenroll per course
+- Completion tracking per enrolled course
+- Summary metrics for enrolled count and average completion
+
+### Contact
+- Structured lead form with validation
+- Local lead persistence with timestamps
+- Tap-to-copy for email/phone
+- Compose email (mail app + Gmail shortcut)
+
+### UI/UX
+- Consistent page hero styling across sections
+- Scroll-in animations (elements appear as they enter view)
+- Ambient hero background orbs with smooth motion
+
+## Pages
+
+- Home: `/`
+- About: `/about`
+- Courses: `/courses`
+- Contact: `/contact`
+- Login: `/login`
+- Sign Up: `/signup`
+- Reset Password: `/reset-password`
+- Profile: `/profile`
 
 ## Repository Layout
 
 - `Frontend/` - Production-ready Next.js application
-- `Backend/` - Service layer scaffold for upcoming API implementation
+- `Backend/` - Placeholder for future APIs and data services
 
 ## Tech Stack
 
-- Next.js 15
+- Next.js 15 (App Router)
 - React 19
 - Tailwind CSS
 - ESLint (Next.js core web-vitals profile)
 
 ## Local Development
-
-1. Open terminal at repository root.
-2. Run:
 
 ```bash
 cd Frontend
@@ -36,8 +71,6 @@ App URL: `http://localhost:3000`
 
 ## LAN Testing (Phone + Laptop)
 
-Run the app on your local network:
-
 ```bash
 cd Frontend
 npm run dev:lan
@@ -46,8 +79,6 @@ npm run dev:lan
 Open on mobile (same Wi-Fi): `http://<your-laptop-ip>:3000`
 
 ## Quality Gates
-
-Run static checks before every commit:
 
 ```bash
 cd Frontend
@@ -71,19 +102,10 @@ npm run start
 - `npm run build` - Builds optimized production bundle
 - `npm run start` - Serves production build
 
-## Current UX Highlights
+## Notes
 
-- Refined hero motion with smooth timing and mobile-aware ambient animation
-- Compact theme toggle with persistent preference (Auto, Light, Dark)
-- Improved contact actions including tap-to-copy support
-- Polished chatbot panel layout and interaction behavior
-- Balanced card layouts and improved readability on image-based headers
-
-## Roadmap
-
-- Backend API integration for authentication and dynamic course data
-- Progress tracking and learner dashboard modules
-- Enhanced analytics and engagement instrumentation
+- Authentication, password reset, and progress are stored locally for the current demo.
+- OTP verification and secure password handling should be implemented in the backend before real users.
 
 ## License
 
