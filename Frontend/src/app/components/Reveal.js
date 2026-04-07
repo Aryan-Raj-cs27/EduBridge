@@ -16,12 +16,12 @@ export default function Reveal({
     const node = ref.current;
     if (!node) return;
 
-    const checkInView = () => {
-      const rect = node.getBoundingClientRect();
-      return rect.top < window.innerHeight * 0.95 && rect.bottom > 0;
-    };
+    if (!document.documentElement.dataset.revealReady) {
+      document.documentElement.dataset.revealReady = "true";
+    }
 
-    if (checkInView()) {
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
       const raf = window.requestAnimationFrame(() => setVisible(true));
       return () => window.cancelAnimationFrame(raf);
     }
@@ -30,9 +30,6 @@ export default function Reveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    // Keep above-the-fold content from staying hidden on first load.
-    const fallbackTimer = window.setTimeout(() => setVisible(true), 160);
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         setVisible(entry.isIntersecting);
@@ -42,7 +39,6 @@ export default function Reveal({
 
     observer.observe(node);
     return () => {
-      window.clearTimeout(fallbackTimer);
       observer.disconnect();
     };
   }, []);
