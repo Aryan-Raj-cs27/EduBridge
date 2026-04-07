@@ -7,7 +7,6 @@ export default function AboutPage() {
       <PageHero
         title="About EduBridge"
         subtitle="Built for learners who want practical growth with clarity, structure, and momentum."
-        image="/about-bg.jpg"
       />
 
       <div className="site-container section-padding text-center">

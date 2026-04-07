@@ -161,6 +161,13 @@ body {
     @apply border border-slate-300 text-slate-700 hover:bg-slate-100;
   }
 
+  .auth-shell {
+    background:
+      radial-gradient(circle at 18% 15%, rgba(59, 130, 246, 0.28), transparent 45%),
+      radial-gradient(circle at 82% 18%, rgba(14, 165, 233, 0.22), transparent 48%),
+      linear-gradient(140deg, #0b1220 0%, #102348 45%, #0b1a33 100%);
+  }
+
   .nav-link {
     @apply px-3 py-1 rounded-md transition;
     color: var(--navbar-text);
@@ -430,6 +437,12 @@ html[data-theme="dark"] .auth-switcher-btn-inactive {
 
 html[data-theme="dark"] .auth-switcher-btn-inactive:hover {
   background: rgba(30, 41, 59, 0.88);
+}
+
+html[data-theme="dark"] .form-hint {
+  border-color: #334155;
+  background: rgba(15, 23, 42, 0.82);
+  color: #cbd5e1;
 }
 
 html[data-theme="dark"] .courses-summary {

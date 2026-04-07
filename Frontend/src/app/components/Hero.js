@@ -13,8 +13,8 @@ export default function Hero() {
     let rafId = 0;
     let driftX = 50;
     let driftY = 34;
-    let vx = 0.11;
-    let vy = 0.08;
+    let vx = 0.18;
+    let vy = 0.12;
 
     const tick = () => {
       driftX += vx;
@@ -26,9 +26,10 @@ export default function Hero() {
       const wanderX = driftX + Math.sin(Date.now() * 0.0012) * 4;
       const wanderY = driftY + Math.cos(Date.now() * 0.001) * 3;
       const target = hovered.current ? pointerTarget.current : { x: wanderX, y: wanderY };
+      const followStrength = hovered.current ? 0.06 : 0.08;
 
-      const nextX = visualPos.current.x + (target.x - visualPos.current.x) * 0.08;
-      const nextY = visualPos.current.y + (target.y - visualPos.current.y) * 0.08;
+      const nextX = visualPos.current.x + (target.x - visualPos.current.x) * followStrength;
+      const nextY = visualPos.current.y + (target.y - visualPos.current.y) * followStrength;
       visualPos.current = { x: nextX, y: nextY };
       setMouse({ x: nextX, y: nextY });
 

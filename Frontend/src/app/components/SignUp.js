@@ -146,8 +146,7 @@ export default function SignUp() {
 
   return (
     <section
-      className="relative min-h-[calc(100vh-68px)] overflow-hidden bg-cover bg-center px-4 py-8 sm:px-6 lg:px-8"
-      style={{ backgroundImage: "url('/about-bg.jpg')" }}
+      className="auth-shell relative min-h-[calc(100vh-68px)] overflow-hidden px-4 py-8 sm:px-6 lg:px-8"
     >
       <div className="absolute inset-0 bg-slate-950/72" aria-hidden="true"></div>
       <div className="absolute -left-16 top-10 h-52 w-52 rounded-full bg-blue-500/25 blur-3xl" aria-hidden="true"></div>
