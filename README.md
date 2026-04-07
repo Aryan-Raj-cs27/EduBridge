@@ -107,6 +107,11 @@ npm run start
 - Authentication, password reset, and progress are stored locally for the current demo.
 - OTP verification and secure password handling should be implemented in the backend before real users.
 
+## Security
+
+- Authentication is demo-only and uses browser localStorage.
+- For production, move auth to the backend with hashed passwords, OTP/email verification, and secure session handling.
+
 ## License
 
 This project is licensed under the terms specified in `Frontend/LICENSE`.
