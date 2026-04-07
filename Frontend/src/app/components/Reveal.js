@@ -16,18 +16,21 @@ export default function Reveal({
     const node = ref.current;
     if (!node) return;
 
+    // Keep above-the-fold content from staying hidden on first load.
+    const fallbackTimer = window.setTimeout(() => setVisible(true), 120);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
+        setVisible(entry.isIntersecting);
       },
-      { threshold: 0.2 }
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      window.clearTimeout(fallbackTimer);
+      observer.disconnect();
+    };
   }, []);
 
   return (

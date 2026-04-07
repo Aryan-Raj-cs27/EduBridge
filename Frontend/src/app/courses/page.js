@@ -1,10 +1,72 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import courses from "./coursesData"; // Import local data
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
 
 const Courses = () => {
+  const [courseProgress, setCourseProgress] = useState({});
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("edubridgeCourseProgress");
+      const parsed = raw ? JSON.parse(raw) : {};
+      setCourseProgress(parsed && typeof parsed === "object" ? parsed : {});
+    } catch {
+      setCourseProgress({});
+    }
+  }, []);
+
+  const persistProgress = (nextState) => {
+    setCourseProgress(nextState);
+    localStorage.setItem("edubridgeCourseProgress", JSON.stringify(nextState));
+  };
+
+  const toggleEnrollment = (courseId) => {
+    const key = String(courseId);
+    const existing = courseProgress[key] || { enrolled: false, completion: 0 };
+    const nextState = {
+      ...courseProgress,
+      [key]: {
+        enrolled: !existing.enrolled,
+        completion: existing.enrolled ? 0 : existing.completion,
+      },
+    };
+    persistProgress(nextState);
+  };
+
+  const setCompletion = (courseId, value) => {
+    const key = String(courseId);
+    const existing = courseProgress[key] || { enrolled: true, completion: 0 };
+    const numericValue = Number(value);
+    const boundedValue = Number.isFinite(numericValue) ? Math.max(0, Math.min(100, numericValue)) : 0;
+    const nextState = {
+      ...courseProgress,
+      [key]: {
+        ...existing,
+        enrolled: true,
+        completion: boundedValue,
+      },
+    };
+    persistProgress(nextState);
+  };
+
+  const summary = useMemo(() => {
+    const values = Object.values(courseProgress);
+    const enrolledCount = values.filter((item) => item?.enrolled).length;
+    const avgCompletion = enrolledCount
+      ? Math.round(
+          values
+            .filter((item) => item?.enrolled)
+            .reduce((acc, item) => acc + (item?.completion || 0), 0) / enrolledCount
+        )
+      : 0;
+
+    return { enrolledCount, avgCompletion };
+  }, [courseProgress]);
+
   return (
     <div>
       <PageHero
@@ -23,6 +85,14 @@ const Courses = () => {
             </p>
           </Reveal>
 
+          <Reveal delay={160}>
+            <div className="courses-summary mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-3 rounded-xl px-4 py-3 text-sm font-medium">
+              <span>Enrolled: {summary.enrolledCount}</span>
+              <span className="h-1 w-1 rounded-full bg-current/40"></span>
+              <span>Average Completion: {summary.avgCompletion}%</span>
+            </div>
+          </Reveal>
+
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course, index) => (
               <Reveal key={course.id} delay={80 * (index + 1)}>
@@ -36,6 +106,43 @@ const Courses = () => {
                   />
                   <h3 className="mt-4 text-xl font-semibold text-slate-900">{course.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{course.description}</p>
+
+                  {(() => {
+                    const state = courseProgress[String(course.id)] || { enrolled: false, completion: 0 };
+                    return (
+                      <div className="mt-4 space-y-3">
+                        <button
+                          type="button"
+                          onClick={() => toggleEnrollment(course.id)}
+                          className={`w-full rounded-md px-3 py-2 text-sm font-semibold transition ${
+                            state.enrolled
+                              ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                              : "bg-slate-900 text-white hover:bg-slate-800"
+                          }`}
+                        >
+                          {state.enrolled ? "Enrolled" : "Enroll Now"}
+                        </button>
+
+                        {state.enrolled && (
+                          <div>
+                            <div className="flex items-center justify-between text-xs text-slate-600">
+                              <span>Progress</span>
+                              <span>{state.completion}%</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="0"
+                              max="100"
+                              step="5"
+                              value={state.completion}
+                              onChange={(e) => setCompletion(course.id, e.target.value)}
+                              className="mt-1 w-full accent-blue-600"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               </Reveal>
             ))}

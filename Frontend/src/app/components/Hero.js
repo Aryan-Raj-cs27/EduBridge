@@ -1,27 +1,42 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import Reveal from "./Reveal";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function Hero() {
-  const [mouse, setMouse] = useState({ x: 50, y: 30 });
+  const [mouse, setMouse] = useState({ x: 50, y: 34 });
+  const pointerTarget = useRef({ x: 50, y: 34 });
+  const visualPos = useRef({ x: 50, y: 34 });
+  const hovered = useRef(false);
 
   useEffect(() => {
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    if (!isTouchDevice) {
-      return;
-    }
+    let rafId = 0;
+    let driftX = 50;
+    let driftY = 34;
+    let vx = 0.11;
+    let vy = 0.08;
 
-    let angle = 0;
-    const timer = window.setInterval(() => {
-      angle += 0.08;
-      const x = 50 + Math.sin(angle) * 12;
-      const y = 36 + Math.cos(angle * 0.8) * 8;
-      setMouse({ x, y });
-    }, 80);
+    const tick = () => {
+      driftX += vx;
+      driftY += vy;
 
-    return () => window.clearInterval(timer);
+      if (driftX < 34 || driftX > 66) vx *= -1;
+      if (driftY < 22 || driftY > 52) vy *= -1;
+
+      const wanderX = driftX + Math.sin(Date.now() * 0.0012) * 4;
+      const wanderY = driftY + Math.cos(Date.now() * 0.001) * 3;
+      const target = hovered.current ? pointerTarget.current : { x: wanderX, y: wanderY };
+
+      const nextX = visualPos.current.x + (target.x - visualPos.current.x) * 0.08;
+      const nextY = visualPos.current.y + (target.y - visualPos.current.y) * 0.08;
+      visualPos.current = { x: nextX, y: nextY };
+      setMouse({ x: nextX, y: nextY });
+
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    rafId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(rafId);
   }, []);
 
   const styleVars = useMemo(
@@ -36,13 +51,22 @@ export default function Hero() {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
     const y = ((event.clientY - rect.top) / rect.height) * 100;
-    setMouse({ x, y });
+    pointerTarget.current = {
+      x: Math.max(0, Math.min(100, x)),
+      y: Math.max(0, Math.min(100, y)),
+    };
   };
 
   return (
     <section
       className="hero-shell"
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => {
+        hovered.current = true;
+      }}
+      onMouseLeave={() => {
+        hovered.current = false;
+      }}
       style={styleVars}
     >
       <div className="hero-grid" aria-hidden="true"></div>
@@ -50,33 +74,27 @@ export default function Hero() {
       <div className="hero-orb hero-orb-right" aria-hidden="true"></div>
 
       <div className="site-container relative py-16 text-center sm:py-20">
-        <Reveal delay={90} duration={540}>
-          <p className="hero-chip">
-            Future-ready Learning Platform
-          </p>
-        </Reveal>
+        <p className="hero-chip hero-intro" style={{ "--hero-intro-delay": "60ms" }}>
+          Future-ready Learning Platform
+        </p>
 
-        <Reveal delay={210} duration={620}>
-          <h1 className="mx-auto mt-4 max-w-4xl text-4xl font-bold leading-[1.15] sm:text-5xl lg:text-6xl">
-            Learn Smarter with
-            <span className="hero-brand mt-3 block">EduBridge AI</span>
-          </h1>
-        </Reveal>
+        <h1 className="hero-intro mx-auto mt-4 max-w-4xl text-4xl font-bold leading-[1.15] sm:text-5xl lg:text-6xl" style={{ "--hero-intro-delay": "170ms" }}>
+          Learn Smarter with
+          <span className="hero-brand mt-3 block">EduBridge AI</span>
+        </h1>
 
-        <Reveal delay={340} duration={600}>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-blue-100 sm:text-lg">
-            Structured and practical learning paths for students, professionals, and career switchers.
-          </p>
-        </Reveal>
+        <p className="hero-intro mx-auto mt-5 max-w-2xl text-base text-blue-100 sm:text-lg" style={{ "--hero-intro-delay": "280ms" }}>
+          Structured and practical learning paths for students, professionals, and career switchers.
+        </p>
 
-        <Reveal delay={430} duration={560} className="mt-9">
+        <div className="hero-intro mt-9" style={{ "--hero-intro-delay": "390ms" }}>
           <Link href="/courses" className="btn-fancy">
             Explore Courses
             <span className="ml-2" aria-hidden="true">
               {"->"}
             </span>
           </Link>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

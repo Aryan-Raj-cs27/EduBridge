@@ -7,13 +7,34 @@ import { FaDesktop, FaMoon, FaSun } from "react-icons/fa";
 export default function Navbar() {
   const pathname = usePathname();
   const [themeChoice, setThemeChoice] = useState("auto");
+  const [sessionUser, setSessionUser] = useState(null);
 
   const themeCycle = ["auto", "light", "dark"];
+
+  const loadSession = () => {
+    try {
+      const rawSession = localStorage.getItem("edubridgeSession");
+      const parsedSession = rawSession ? JSON.parse(rawSession) : null;
+      setSessionUser(parsedSession && parsedSession.email ? parsedSession : null);
+    } catch {
+      setSessionUser(null);
+    }
+  };
 
   useEffect(() => {
     const savedChoice = localStorage.getItem("edubridge-theme") || "auto";
     setThemeChoice(savedChoice);
+    loadSession();
+
+    const syncSession = () => loadSession();
+    window.addEventListener("storage", syncSession);
+
+    return () => window.removeEventListener("storage", syncSession);
   }, []);
+
+  useEffect(() => {
+    loadSession();
+  }, [pathname]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -41,6 +62,7 @@ export default function Navbar() {
     { href: "/about", label: "About" },
     { href: "/courses", label: "Courses" },
     { href: "/contact", label: "Contact" },
+    { href: "/profile", label: "Profile" },
   ];
 
   const activeThemeIcon =
@@ -53,6 +75,11 @@ export default function Navbar() {
     const currentIndex = themeCycle.indexOf(themeChoice);
     const nextTheme = themeCycle[(currentIndex + 1) % themeCycle.length];
     setThemeChoice(nextTheme);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("edubridgeSession");
+    setSessionUser(null);
   };
 
   return (
@@ -71,11 +98,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1 rounded-md transition ${
-                  isActive
-                    ? "border border-blue-300/60 bg-blue-500/10 text-blue-700"
-                    : "text-slate-700 hover:bg-slate-100/80"
-                }`}
+                className={`nav-link ${isActive ? "nav-link-active" : ""}`}
               >
                 {link.label}
               </Link>
@@ -90,16 +113,30 @@ export default function Navbar() {
           >
             {activeThemeIcon}
           </button>
-          <Link
-            href="/signup"
-            className={`rounded-md px-3 py-1 font-medium transition ${
-              pathname === "/signup"
-                ? "bg-blue-700 text-white"
-                : "bg-slate-900 text-white hover:bg-slate-800"
-            }`}
-          >
-            Sign Up
-          </Link>
+
+          {sessionUser ? (
+            <>
+              <span className="hidden rounded-md border border-slate-300/70 bg-white/80 px-2 py-1 text-xs font-medium text-slate-700 sm:inline-flex">
+                {sessionUser.name || sessionUser.email}
+              </span>
+              <button
+                type="button"
+                onClick={logout}
+                className="rounded-md border border-slate-300 px-3 py-1 font-medium text-slate-700 transition hover:bg-slate-100"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/signup"
+                className={`nav-link ${pathname === "/signup" || pathname === "/login" ? "nav-link-active" : ""}`}
+              >
+                Login / Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
