@@ -18,10 +18,11 @@ export default function Login() {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
+    setSuccess("");
 
     const email = formData.email.trim().toLowerCase();
     const password = formData.password;
@@ -32,41 +33,50 @@ export default function Login() {
       return;
     }
 
-    let users = [];
     try {
-      const raw = localStorage.getItem("edubridgeUsers");
-      users = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(users)) users = [];
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        localStorage.setItem(
+          "edubridgeSession",
+          JSON.stringify({
+            name: data?.user?.name,
+            email: data?.user?.email,
+            loggedInAt: new Date().toISOString(),
+          })
+        );
+
+        setSuccess(data.message || "Login successful. Redirecting to Courses...");
+        setTimeout(() => {
+          router.push("/courses");
+        }, 900);
+        return;
+      }
+
+      if (response.status === 404) {
+        setError(data.message || "Account not found.");
+        return;
+      }
+
+      if (response.status === 401) {
+        setError(data.message || "Invalid password.");
+        return;
+      }
+
+      setError(data.message || "Unable to login right now.");
     } catch {
-      users = [];
-    }
-
-    const user = users.find((item) => (item.email || "").toLowerCase() === email);
-    if (!user) {
-      setError("No account found for this email. Please sign up first.");
+      setError("Unable to connect to the server. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      return;
     }
-
-    if (user.password !== password) {
-      setError("Incorrect password. Please try again.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    localStorage.setItem(
-      "edubridgeSession",
-      JSON.stringify({
-        name: user.name,
-        email: user.email,
-        loggedInAt: new Date().toISOString(),
-      })
-    );
-
-    setSuccess("Login successful. Redirecting to Courses...");
-    setTimeout(() => {
-      router.push("/courses");
-    }, 900);
   };
 
   return (
