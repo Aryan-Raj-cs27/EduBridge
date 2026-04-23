@@ -64,7 +64,7 @@ export default function Contact() {
     }
   };
 
-  const handleLeadSubmit = (e) => {
+  const handleLeadSubmit = async (e) => {
     e.preventDefault();
     setSuccessMessage("");
 
@@ -76,27 +76,30 @@ export default function Contact() {
 
     setSubmitting(true);
     try {
-      let existing = [];
-      try {
-        const raw = localStorage.getItem("edubridgeLeads");
-        existing = raw ? JSON.parse(raw) : [];
-        if (!Array.isArray(existing)) existing = [];
-      } catch {
-        existing = [];
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          topic: formData.topic,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        setSuccessMessage(data.message || "Thanks, your message has been submitted successfully.");
+        setFormData({ name: "", email: "", topic: "", message: "" });
+        setErrors({});
+      } else {
+        setSuccessMessage(data.message || "Failed to submit your message. Please try again.");
       }
-
-      const payload = {
-        ...formData,
-        id: Date.now(),
-        createdAt: new Date().toISOString(),
-        status: "new",
-      };
-      const nextLeads = Array.isArray(existing) ? [...existing, payload] : [payload];
-      localStorage.setItem("edubridgeLeads", JSON.stringify(nextLeads));
-
-      setSuccessMessage("Thanks, your message has been saved. We will contact you soon.");
-      setFormData({ name: "", email: "", topic: "", message: "" });
-      setErrors({});
+    } catch {
+      setSuccessMessage("Unable to connect to the server. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -265,7 +268,7 @@ export default function Contact() {
                     disabled={submitting}
                     className="rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-blue-300"
                   >
-                    {submitting ? "Saving..." : "Submit"}
+                    {submitting ? "Submitting..." : "Submit"}
                   </button>
 
                   <a

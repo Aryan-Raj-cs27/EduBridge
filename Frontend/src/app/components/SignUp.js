@@ -19,6 +19,7 @@ export default function SignUp() {
     confirmPassword: "",
   });
   const [successMessage, setSuccessMessage] = useState("");
+  const [apiError, setApiError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Handle Input Change
@@ -26,6 +27,7 @@ export default function SignUp() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors((prev) => ({ ...prev, [name]: "" }));
+    setApiError("");
   };
 
   const validateName = (name) => {
@@ -65,20 +67,11 @@ export default function SignUp() {
     special: /[^A-Za-z0-9]/.test(formData.password),
   };
 
-  const getStoredUsers = () => {
-    try {
-      const raw = localStorage.getItem("edubridgeUsers");
-      const users = raw ? JSON.parse(raw) : [];
-      return Array.isArray(users) ? users : [];
-    } catch {
-      return [];
-    }
-  };
-
   // Handle Form Submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setApiError("");
 
     const nameError = validateName(formData.name);
     const emailError = validateEmail(formData.email);
@@ -100,48 +93,42 @@ export default function SignUp() {
       return;
     }
 
-    const normalizedEmail = formData.email.trim().toLowerCase();
-    const users = getStoredUsers();
-    const alreadyExists = users.some((user) => (user.email || "").toLowerCase() === normalizedEmail);
-    if (alreadyExists) {
-      setErrors((prev) => ({ ...prev, email: "An account with this email already exists. Please login." }));
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        setSuccessMessage(data.message || "Account created successfully. Redirecting to login...");
+        setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+        setTimeout(() => {
+          router.push("/login");
+        }, 1200);
+        return;
+      }
+
+      if (response.status === 409) {
+        setErrors((prev) => ({ ...prev, email: "An account with this email already exists. Please login." }));
+        setApiError(data.message || "This email is already registered.");
+        return;
+      }
+
+      setApiError(data.message || "Something went wrong while creating your account.");
+    } catch {
+      setApiError("Unable to connect to the server. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      return;
     }
-
-    const userData = {
-      name: formData.name.trim(),
-      email: normalizedEmail,
-      password: formData.password,
-      createdAt: new Date().toISOString(),
-    };
-
-    const nextUsers = [...users, userData];
-    localStorage.setItem("edubridgeUsers", JSON.stringify(nextUsers));
-    localStorage.setItem("edubridgeSession", JSON.stringify({
-      name: userData.name,
-      email: userData.email,
-      loggedInAt: new Date().toISOString(),
-    }));
-    localStorage.setItem("edubridgeUser", JSON.stringify({
-      name: userData.name,
-      email: userData.email,
-      createdAt: userData.createdAt,
-    }));
-
-    console.log("Form Data:", {
-      name: formData.name,
-      email: normalizedEmail,
-      password: "***hidden***",
-    });
-
-    setSuccessMessage("Account created successfully. Redirecting to Courses...");
-
-    setTimeout(() => {
-      setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-      setSuccessMessage("");
-      router.push("/courses");
-    }, 1200);
   };
 
   return (
@@ -191,6 +178,12 @@ export default function SignUp() {
               {successMessage && (
                 <p className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
                   {successMessage}
+                </p>
+              )}
+
+              {apiError && (
+                <p className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {apiError}
                 </p>
               )}
 
