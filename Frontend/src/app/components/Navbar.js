@@ -116,7 +116,7 @@ export default function Navbar() {
 
           {sessionUser ? (
             <>
-              <span className="hidden rounded-md border border-slate-300/70 bg-white/80 px-2 py-1 text-xs font-medium text-slate-700 sm:inline-flex">
+              <span className="session-chip">
                 {sessionUser.name || sessionUser.email}
               </span>
               <button

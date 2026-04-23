@@ -193,6 +193,26 @@ body {
     color: #1e40af;
   }
 
+  .session-chip {
+    @apply hidden rounded-md border px-2 py-1 text-xs font-medium sm:inline-flex;
+    border-color: color-mix(in srgb, var(--border) 75%, transparent);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    color: var(--foreground);
+  }
+
+  .profile-meta-card {
+    @apply rounded-lg border px-4 py-3;
+    border-color: color-mix(in srgb, var(--border) 82%, transparent);
+    background: color-mix(in srgb, var(--surface) 74%, transparent);
+  }
+
+  .site-footer {
+    border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+    background:
+      radial-gradient(circle at 12% 10%, color-mix(in srgb, var(--brand-100) 22%, transparent) 0%, transparent 32%),
+      linear-gradient(180deg, color-mix(in srgb, var(--surface-soft) 46%, transparent), color-mix(in srgb, var(--surface) 90%, transparent));
+  }
+
   .hero-shell {
     @apply relative overflow-hidden text-white;
     background: linear-gradient(130deg, var(--hero-from) 0%, var(--hero-via) 48%, var(--hero-to) 100%);
@@ -327,9 +347,18 @@ html[data-theme="dark"] .text-slate-600 {
   color: #cbd5e1 !important;
 }
 
+html[data-theme="dark"] .text-slate-500 {
+  color: #b9c7de !important;
+}
+
 html[data-theme="dark"] .bg-white,
 html[data-theme="dark"] .bg-white\/95 {
   background-color: rgba(15, 23, 42, 0.95) !important;
+}
+
+html[data-theme="dark"] .bg-white\/70,
+html[data-theme="dark"] .bg-white\/80 {
+  background-color: rgba(17, 28, 53, 0.92) !important;
 }
 
 html[data-theme="dark"] .bg-slate-50,

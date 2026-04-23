@@ -53,15 +53,15 @@ export default function ProfilePage() {
             <div className="card-surface p-6 sm:p-8">
               <h2 className="text-2xl font-bold text-slate-900">Welcome, {sessionUser.name || "Learner"}</h2>
               <div className="mt-6 space-y-3 text-sm">
-                <div className="rounded-lg border border-slate-200/80 bg-white/70 px-4 py-3">
+                <div className="profile-meta-card">
                   <p className="text-slate-500">Name</p>
                   <p className="font-semibold text-slate-900">{sessionUser.name || "Not set"}</p>
                 </div>
-                <div className="rounded-lg border border-slate-200/80 bg-white/70 px-4 py-3">
+                <div className="profile-meta-card">
                   <p className="text-slate-500">Email</p>
                   <p className="font-semibold text-slate-900">{sessionUser.email}</p>
                 </div>
-                <div className="rounded-lg border border-slate-200/80 bg-white/70 px-4 py-3">
+                <div className="profile-meta-card">
                   <p className="text-slate-500">Signed In At</p>
                   <p className="font-semibold text-slate-900">{sessionUser.loggedInAt ? new Date(sessionUser.loggedInAt).toLocaleString() : "Unknown"}</p>
                 </div>
