@@ -2,7 +2,6 @@ import Features from "./components/Features";
 import Hero from "./components/Hero";
 import Link from "next/link";
 import Reveal from "./components/Reveal";
-import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -34,7 +33,6 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }
