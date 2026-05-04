@@ -17,7 +17,7 @@ export default function Contact() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const phoneNumber = "+91-9031859167";
-  const email = "priyanshkummar21jul@gmail.com";
+  const email = "priyanshkuar21jul@gmail.com";
 
   const mailtoLink = useMemo(() => {
     const subject = encodeURIComponent(`EduBridge Lead: ${formData.topic || "General Inquiry"}`);
