@@ -1,0 +1,22 @@
+# Root repository hygiene
+.vscode/
+.cursorrules
+.cursor/
+.cursorignore
+.cursorindexingignore
+.copilot/
+.agent/
+.github/context/
+
+# Runtime and build outputs
+.next/
+node_modules/
+.env
+.env.*
+*.log
+coverage/
+*.code-workspace
+
+# Local OS files
+.DS_Store
+Thumbs.db
